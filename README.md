@@ -29,7 +29,7 @@ cd SecureKey
 python password_maker.py
 
 
-##📂 Project Structure
+📂 Project Structure
 SecureKey/
 │
 ├── password_maker.py
@@ -37,7 +37,7 @@ SecureKey/
 ├── README.md
 └── .gitignor
 
-##📚 What I Learned
+📚 What I Learned
 Using Python's secrets module for real security
 
 Working with the string module
@@ -50,5 +50,5 @@ Error handling using try-except blocks
 
 Password strength checking logic
 
-##👩‍💻 Author
+👩‍💻 Author
 Bhagyashri Yogesh Gawali
