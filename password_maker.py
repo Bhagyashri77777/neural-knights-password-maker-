@@ -1,26 +1,68 @@
-import random
+import secrets
+import string
 
-print("--- Neural Knights Password Maker ---")
-print("By Team Leader: Bhagyashri")
+def generate_password(length):
+    """Generate a secure random password."""
+    if length < 8:
+        return None
 
-# A simple way to list all our characters
-letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-numbers = "0123456789"
-symbols = "!@#$%^&*"
+    characters = string.ascii_letters + string.digits + string.punctuation
+    password = "".join(secrets.choice(characters) for _ in range(length))
+    return password
 
-# Adding them all together
-all_chars = letters + numbers + symbols
+def check_strength(password):
+    """Check password strength."""
+    score = 0
+    if len(password) >= 12:
+        score += 1
+    if any(c.isupper() for c in password):
+        score += 1
+    if any(c.islower() for c in password):
+        score += 1
+    if any(c.isdigit() for c in password):
+        score += 1
+    if any(c in string.punctuation for c in password):
+        score += 1
 
-# Asking for a number
-length = int(input("How long should the password be? "))
+    if score == 5:
+        return "Very Strong"
+    elif score == 4:
+        return "Strong"
+    elif score == 3:
+        return "Medium"
+    else:
+        return "Weak"
 
-# Starting with an empty password
-my_password = ""
+def save_password(password):
+    """Save password to passwords.txt"""
+    with open("passwords.txt", "a") as file:
+        file.write(password + "\n")
 
-# A very basic college-level loop to pick random characters
-for i in range(length):
-    random_char = random.choice(all_chars)
-    my_password = my_password + random_char
+# ---------------- MAIN PROGRAM ---------------- #
+print("=" * 40)
+print("      SecureKey Password Generator")
+print("=" * 40)
+print("Created by: Bhagyashri Yogesh Gawali\n")
 
-print("\nYour new password is:")
-print(my_password)
+try:
+    length = int(input("Enter password length (minimum 8): "))
+    password = generate_password(length)
+
+    if password is None:
+        print("\n❌ Password length must be at least 8 characters.")
+    else:
+        print("\n✅ Your Password:")
+        print(password)
+        print(f"\n🔐 Strength: {check_strength(password)}")
+
+        choice = input("\nDo you want to save this password? (y/n): ").lower()
+        if choice == "y":
+            save_password(password)
+            print("✅ Password saved successfully in passwords.txt")
+        else:
+            print("Password was not saved.")
+
+except ValueError:
+    print("\n❌ Please enter a valid number.")
+
+print("\n✨ Thank you for using SecureKey!")
